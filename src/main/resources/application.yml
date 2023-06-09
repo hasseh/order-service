@@ -21,3 +21,5 @@ server:
   netty:
     connection-timeout: 2s
     idle-timeout: 15s
+polar:
+  catalog-service-uri: "http://localhost:9001"
