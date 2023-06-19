@@ -51,3 +51,19 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+tasks.named('bootBuildImage') {
+	imageName = "${project.name}"
+	environment = ["BP_JVM_VERSION": "17.*"]
+
+	if (System.getProperty( "os.arch" ).toLowerCase().startsWith('aarch')) {
+		builder = "ghcr.io/thomasvitale/java-builder-arm64"
+	}
+	builder = "paketobuildpacks/builder:tiny"
+	docker {
+		publishRegistry {
+			username = project.findProperty("registryUsername")
+			password = project.findProperty("registryToken")
+			url = project.findProperty("registryUrl")
+		}
+	}
+}
